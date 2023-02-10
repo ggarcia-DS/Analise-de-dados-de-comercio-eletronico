@@ -13,7 +13,7 @@ As perguntas são:
 8) Quais as dez lojas com maior tempo médio de envio? E as 10 lojas com menor tempo médio de envio? Indicar tempo médio.
 9) Como as vendas se distribuem ao longo do ano? Há sazonalidade? Há tendências de aumento ou diminuição?
 10) Quantas lojas realizaram vendas?
-11) Vendas, receita, produtos vendidos e preço médio de produto por loja? (Somente as 10 lojas com mais vendas)
+11) Qual o número de vendas, a receita total, o número total de produtos vendidos e o preço médio de produto por loja? (Somente as 10 lojas com mais vendas)
 12) Qual a nota média das vendas por loja? (Somente as 10 lojas com mais vendas)
 13) Quais foram as 5 categorias de produtos com maior receita, e qual foi a receita de cada uma?
 14) Quais foram os métodos de pagamento mais utilizados para compras à vista e para compras parceladas?
@@ -137,7 +137,7 @@ SELECT
 			ROUND(SUM(PRECO), 2) AS receita,
 			COUNT(PRODUTO_ID) AS total_produtos
 		FROM vendas_itens
-		GROUP BY LOJA_ID) R9
+		GROUP BY LOJA_ID) R11
 	ORDER BY total_vendas DESC
 	LIMIT 10;
     
@@ -155,7 +155,7 @@ FROM
 		VA.VENDA_NOTA
 	FROM vendas_itens VI
 	LEFT JOIN vendas_avaliacoes VA
-	ON VI.VENDA_ID = VA.VENDA_ID) R10
+	ON VI.VENDA_ID = VA.VENDA_ID) R12
 GROUP BY LOJA_ID
 ORDER BY total_vendas DESC
 LIMIT 10;
@@ -172,10 +172,10 @@ FROM
 		VI.PRECO
 	FROM produtos P
 	RIGHT JOIN vendas_itens VI
-	ON P.PRODUTO_ID = VI.PRODUTO_ID) R12
-    GROUP BY CATEGORIA
-    ORDER BY receita DESC
-    LIMIT 5;
+	ON P.PRODUTO_ID = VI.PRODUTO_ID) R13
+GROUP BY CATEGORIA
+ORDER BY receita DESC
+LIMIT 5;
     
 /*
 14) Quais foram os métodos de pagamento mais utilizados para compras à vista e para compras parceladas?

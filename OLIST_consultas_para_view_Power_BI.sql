@@ -22,7 +22,8 @@ SELECT
     V.MOMENTO_APROVAÇAO,
     V.MOMENTO_ENVIO,
     V.MOMENTO_ENTREGA,
-    DATEDIFF(V.MOMENTO_ENTREGA, V.MOMENTO_ENVIO) AS TEMPO_ENVIO,
+	DATEDIFF(V.MOMENTO_ENVIO, V.MOMENTO_APROVAÇAO) AS TEMPO_ENVIO,
+    DATEDIFF(V.MOMENTO_ENTREGA, V.MOMENTO_ENVIO) AS TEMPO_ENTREGA,
     V.ESTIMATIVA_ENTREGA
 FROM vendas V
 LEFT JOIN vendas_itens VI
@@ -32,6 +33,7 @@ ON V.VENDA_ID = VA.VENDA_ID
 LEFT JOIN produtos P
 ON VI.PRODUTO_ID = P.PRODUTO_ID;
 
+drop view vw1;
 /*
 Exportando vw1 como arquivo .csv
 */
@@ -42,18 +44,3 @@ INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/olist_vw1.CSV'
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n';
-
-
-
-/*
-7) Quantas vendas tiveram entregas dentro do prazo e quantas atrasaram?
-9) Quantas lojas realizaram vendas?
-10) Vendas, receita, produtos vendidos e preço médio de produto por loja? (Somente as 10 lojas com mais vendas)
-11) Qual a nota média das vendas por loja? (Somente as 10 lojas com mais vendas)
-12) Quais foram as 5 categorias de produtos com maior receita, e qual foi a receita de cada uma?
-13) Quais foram os métodos de pagamento mais utilizados para compras à vista e para compras parceladas?
-14) Quantas vezes cada número de parcelas foi utlizado? 
-*/
-
-SELECT * from vw1;
-    
